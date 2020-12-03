@@ -12,9 +12,8 @@ add_executable( TLSFTest
     ${SRC}
 )
 
-#target_link_libraries( TLSFTest
-#    GxBase
-#)
-
+target_link_libraries( TLSFTest
+    TLSF
+)
 
 project( Tests )

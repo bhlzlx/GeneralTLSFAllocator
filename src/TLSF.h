@@ -112,15 +112,29 @@ namespace ugi {
             Array<uint32_t, 31>                 _2ndBitmap;
             Array<Array<Node*, SLC>, 31>        _allocationTable;
             std::map<uint32_t, Node*>           _allocationMap;
+            Node*                               _head;
             //
-            Node* createNode();
-            void destroyNode(Node* node);
+            Node* createNode() {
+                return new Node();
+            }
+            void destroyNode(Node* node) {
+                delete node;
+            }
         public:
-            Allocator()
+            Allocator( uint32_t size )
                 : _1stBitmap(0)
                 , _2ndBitmap{}
                 , _allocationTable{}
-            {}
+            {
+                Node* node = createNode();
+                node->size = size;
+                node->prev = node->next = nullptr;
+                node->nextPhy = node->prevPhy = nullptr;
+                node->free = 1;
+                node->offset = 0;
+                insertFreeAllocation(node, false);
+                _head = node;
+            }
 
             BitmapLevel queryBitmapLevelForAlloc(size_t size) {
                 BitmapLevel level;
@@ -290,7 +304,7 @@ namespace ugi {
                     if(prevPhyAlloc && prevPhyAlloc->free) {
                         removeFreeAllocationAndUpdateBitmap(prevPhyAlloc);
                         prevPhyAlloc->size += allocation->size;
-                        allocation = prevPhyAlloc;
+                        // allocation = prevPhyAlloc;
                         prevPhyAlloc->nextPhy = nextPhyAlloc;
                         destroyNode(allocation);
                         allocation = prevPhyAlloc;
@@ -343,6 +357,7 @@ namespace ugi {
                 splitedNode->offset = targetAlloc->offset + size;
                 splitedNode->size = targetAlloc->size - size;
                 splitedNode->free = 1;
+                targetAlloc->size = size;
                 //
                 insertFreeAllocation(splitedNode);
                 return targetAlloc;
@@ -375,6 +390,7 @@ namespace ugi {
                     return ~0;
                 } else {
                     _allocationMap[node->offset] = node;
+                    node->free = 0;
                     return node->offset;
                 }
             }
@@ -393,6 +409,7 @@ namespace ugi {
                     }
                 }
                 insertFreeAllocation(node, true); // 回收旧的，分配新的
+                node->free = 1;
                 _allocationMap.erase(offset);
                 return alloc(size);
             }
@@ -401,6 +418,7 @@ namespace ugi {
                 Node* node = _allocationMap[offset];
                 assert(node);
                 insertFreeAllocation(node, true);
+                node->free = 1;
                 _allocationMap.erase(offset);
             }
 

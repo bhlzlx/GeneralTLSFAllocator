@@ -5,50 +5,20 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "GxMemoryTest(msvc-debug)",
+            "name": "TLSFTest(msvc-debug)",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/Windows_64_Debug/GxMemoryTest.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": false
-        },{
-            "name": "GxMemoryTest(msvc-release)",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/bin/Windows_64_Release/GxMemoryTest.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": false
-        },{
-            "name": "ObjectPoolTest(msvc-debug)",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/bin/Windows_64_Debug/ObjectPoolTest.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": false
-        },{
-            "name": "TestExistTest(msvc-debug)",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/bin/Windows_64_Debug/TestExistTest.exe",
+            "program": "${workspaceFolder}/bin/Windows_64_Debug/TLSFTest.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": true
         },{
-            "name": "TestExistTest 32(msvc-debug)",
+            "name": "TLSFTest 32(msvc-debug)",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/Windows_32_Debug/TestExistTest.exe",
+            "program": "${workspaceFolder}/bin/Windows_32_Debug/TLSFTest.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
